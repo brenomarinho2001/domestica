@@ -36,7 +36,7 @@ function renderTasks(tasks) {
             <div>
                 <div>
                     <i></i> ${task.name}
-                    ${task.imageUrl ? `<br><img src="${task.imageUrl}" alt="Imagem da tarefa" style="max-width: 100px; max-height: 100px;">` : ""}
+                    ${task.imageUrl ? `<br><img src="${task.imageUrl}" alt="Imagem da tarefa" style="max-width: 100%; max-height: 100%;">` : ""}
                 </div>
                 <div class="butt">
                     <button class="${task.done ? 'done' : 'notDone'} toggleTaskBtn" data-index="${index}">
@@ -48,35 +48,23 @@ function renderTasks(tasks) {
         `;
         taskList.appendChild(taskItem);
     });
-    document.querySelectorAll(".task-image").forEach(img => {
-        img.addEventListener("click", (e) => {
-            document.getElementById("modalImg").src = e.target.dataset.src;
-            document.getElementById("imageModal").style.display = "flex";
+
+    const toggleButtons = document.querySelectorAll(".toggleTaskBtn");
+    toggleButtons.forEach(button => {
+        button.addEventListener("click", (e) => {
+            const index = e.target.getAttribute("data-index");
+            toggleTask(index);
         });
     });
 
-    document.querySelector(".close").addEventListener("click", () => {
-        document.getElementById("imageModal").style.display = "none";
+    const deleteButtons = document.querySelectorAll(".delete-btn");
+    deleteButtons.forEach(button => {
+        button.addEventListener("click", (e) => {
+            const index = e.target.getAttribute("data-index");
+            deleteTask(index);
+        });
     });
-
-    // const toggleButtons = document.querySelectorAll(".toggleTaskBtn");
-    // toggleButtons.forEach(button => {
-    //     button.addEventListener("click", (e) => {
-    //         const index = e.target.getAttribute("data-index");
-    //         toggleTask(index);
-    //     });
-    // });
-
-    // const deleteButtons = document.querySelectorAll(".delete-btn");
-    // deleteButtons.forEach(button => {
-    //     button.addEventListener("click", (e) => {
-    //         const index = e.target.getAttribute("data-index");
-    //         deleteTask(index);
-    //     });
-    // });
 }
-
-
 
 // Função para adicionar uma nova tarefa com imagem
 // Função para adicionar uma nova tarefa com imagem local
@@ -86,33 +74,21 @@ function addTask() {
 
     if (!taskName) return;
 
+    let imageUrl = "";
+
     if (taskImage) {
-        const reader = new FileReader();
-        reader.readAsDataURL(taskImage);
-        reader.onload = function () {
-            const imageUrl = reader.result; // Converte a imagem para Base64
-
-            get(tasksRef).then((snapshot) => {
-                const tasks = snapshot.val() || [];
-                tasks.push({ name: taskName, done: false, imageUrl });
-                set(tasksRef, tasks);
-            });
-
-            taskInput.value = "";
-            taskImageInput.value = "";
-        };
-    } else {
-        get(tasksRef).then((snapshot) => {
-            const tasks = snapshot.val() || [];
-            tasks.push({ name: taskName, done: false, imageUrl: "" });
-            set(tasksRef, tasks);
-        });
-
-        taskInput.value = "";
-        taskImageInput.value = "";
+        imageUrl = URL.createObjectURL(taskImage); // Gera um URL temporário para a imagem
     }
-}
 
+    get(tasksRef).then((snapshot) => {
+        const tasks = snapshot.val() || [];
+        tasks.push({ name: taskName, done: false, imageUrl });
+        set(tasksRef, tasks);
+    });
+
+    taskInput.value = "";
+    taskImageInput.value = "";
+}
 
 
 
