@@ -48,23 +48,35 @@ function renderTasks(tasks) {
         `;
         taskList.appendChild(taskItem);
     });
-
-    const toggleButtons = document.querySelectorAll(".toggleTaskBtn");
-    toggleButtons.forEach(button => {
-        button.addEventListener("click", (e) => {
-            const index = e.target.getAttribute("data-index");
-            toggleTask(index);
+    document.querySelectorAll(".task-image").forEach(img => {
+        img.addEventListener("click", (e) => {
+            document.getElementById("modalImg").src = e.target.dataset.src;
+            document.getElementById("imageModal").style.display = "flex";
         });
     });
 
-    const deleteButtons = document.querySelectorAll(".delete-btn");
-    deleteButtons.forEach(button => {
-        button.addEventListener("click", (e) => {
-            const index = e.target.getAttribute("data-index");
-            deleteTask(index);
-        });
+    document.querySelector(".close").addEventListener("click", () => {
+        document.getElementById("imageModal").style.display = "none";
     });
+
+    // const toggleButtons = document.querySelectorAll(".toggleTaskBtn");
+    // toggleButtons.forEach(button => {
+    //     button.addEventListener("click", (e) => {
+    //         const index = e.target.getAttribute("data-index");
+    //         toggleTask(index);
+    //     });
+    // });
+
+    // const deleteButtons = document.querySelectorAll(".delete-btn");
+    // deleteButtons.forEach(button => {
+    //     button.addEventListener("click", (e) => {
+    //         const index = e.target.getAttribute("data-index");
+    //         deleteTask(index);
+    //     });
+    // });
 }
+
+
 
 // Função para adicionar uma nova tarefa com imagem
 // Função para adicionar uma nova tarefa com imagem local
