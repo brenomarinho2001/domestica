@@ -1,0 +1,141 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+h1 {
+    font-size: 28px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+h1 i {
+    margin-right: 10px;
+    color: #4CAF50; /* Cor do ícone de lápis */
+    font-size: 1.6em; /* Tamanho do ícone */
+}
+
+input, button {
+    padding: 10px;
+    margin: 10px 0;
+    font-size: 1em;
+    width: 80%;
+    max-width: 500px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+    border: none;
+}
+
+button:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+}
+
+/* Estilo da lista */
+ul {
+    list-style-type: none;
+    padding: 0;
+    width: 100%;
+    max-width: 500px;
+}
+
+li {
+    display: flex;
+    align-items: center; /* Alinha todos os itens ao centro verticalmente */
+    justify-content: space-between; /* Espaço entre os itens */
+    background-color: white;
+    padding: 15px;
+    margin: 8px 0;
+    border-radius: 5px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    font-size: 1.1em;
+    position: relative;
+}
+
+
+
+
+
+
+button.done {
+    background-color: #f37c21;
+}
+
+button.done:hover {
+    background-color: #ffd91d;
+}
+
+button.notDone {
+    background-color: #1e7c26;
+}
+
+button.notDone:hover {
+    background-color: #247134;
+}
+.butt{
+    display: flex;
+
+}
+
+i.fa-trash{
+   background-color: red;
+   padding: 12px;
+   
+   margin-left: 10px;
+   border-radius: 10px;
+    align-self: center;
+}
+
+i.fa-trash:hover{
+    cursor: pointer;
+}
+
+/* Responsividade para telas pequenas (celulares) */
+@media (max-width: 600px) {
+    h1 {
+        font-size: 24px;
+    }
+
+    input, button {
+        width: 90%;
+    }
+
+    ul {
+        width: 90%;
+    }
+
+    /* Ajuste para listas em telas pequenas */
+    li {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .delete-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+    }
+
+    
+}
