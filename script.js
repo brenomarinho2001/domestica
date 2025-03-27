@@ -74,21 +74,33 @@ function addTask() {
 
     if (!taskName) return;
 
-    let imageUrl = "";
-
     if (taskImage) {
-        imageUrl = URL.createObjectURL(taskImage); // Gera um URL temporário para a imagem
+        const reader = new FileReader();
+        reader.readAsDataURL(taskImage);
+        reader.onload = function () {
+            const imageUrl = reader.result; // Converte a imagem para Base64
+
+            get(tasksRef).then((snapshot) => {
+                const tasks = snapshot.val() || [];
+                tasks.push({ name: taskName, done: false, imageUrl });
+                set(tasksRef, tasks);
+            });
+
+            taskInput.value = "";
+            taskImageInput.value = "";
+        };
+    } else {
+        get(tasksRef).then((snapshot) => {
+            const tasks = snapshot.val() || [];
+            tasks.push({ name: taskName, done: false, imageUrl: "" });
+            set(tasksRef, tasks);
+        });
+
+        taskInput.value = "";
+        taskImageInput.value = "";
     }
-
-    get(tasksRef).then((snapshot) => {
-        const tasks = snapshot.val() || [];
-        tasks.push({ name: taskName, done: false, imageUrl });
-        set(tasksRef, tasks);
-    });
-
-    taskInput.value = "";
-    taskImageInput.value = "";
 }
+
 
 
 
